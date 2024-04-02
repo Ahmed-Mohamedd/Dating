@@ -1,5 +1,6 @@
 ﻿using Api.Data.Entities;
 using Api.DTOs;
+using Api.Helpers;
 
 namespace Api.Interfaces
 {
@@ -12,7 +13,7 @@ namespace Api.Interfaces
         void Update(AppUser user);
         Task<bool> Save();
 
-        Task<IEnumerable<MemberDto>> GetMembers();
+        Task<PagedList<MemberDto>> GetMembers(UserParams userParams);
         Task<MemberDto> GetMember(string username);
 
     }

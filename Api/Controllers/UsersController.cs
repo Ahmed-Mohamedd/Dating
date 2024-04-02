@@ -2,6 +2,7 @@
 using Api.Data.Entities;
 using Api.DTOs;
 using Api.Extensions;
+using Api.Helpers;
 using Api.Interfaces;
 using Api.Services;
 using AutoMapper;
@@ -27,9 +28,10 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<MemberDto>>> GetUsers()
+        public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
-            var members = (IReadOnlyList<MemberDto>) await _userRepository.GetMembers();
+            var members =  await _userRepository.GetMembers(userParams);
+            Response.AddPaginationHeader(new PaginationHeader(members.CurrentPage, members.PageSize, members.TotlaPages, members.TotalCount));
             return Ok(members);
         }
 
