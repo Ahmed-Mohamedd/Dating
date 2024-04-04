@@ -30,6 +30,12 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
+            var CurrentUser = await _userRepository.GetUserByName(User.GetUuerName());
+            userParams.CurrentUserName = CurrentUser.UserName;
+            if(string.IsNullOrEmpty(userParams.Gender))
+            {
+                userParams.Gender = CurrentUser.Gender == "male" ? "female" : "male";
+            }
             var members =  await _userRepository.GetMembers(userParams);
             Response.AddPaginationHeader(new PaginationHeader(members.CurrentPage, members.PageSize, members.TotlaPages, members.TotalCount));
             return Ok(members);

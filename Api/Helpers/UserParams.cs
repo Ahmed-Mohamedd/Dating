@@ -10,5 +10,11 @@
             get => pageSize;
             set => pageSize = (value > MaxPageSize) ? MaxPageSize : value;
         }
+
+        public string CurrentUserName { get; set; }
+        public string Gender { get; set; }
+
+        public int MaxAge { get; set; } = 100;
+        public int MinAge { get; set; } = 18;
     }
 }
